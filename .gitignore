@@ -6,3 +6,5 @@ cw.tar
 /result
 .#*
 /target
+deploy
+.vscode
