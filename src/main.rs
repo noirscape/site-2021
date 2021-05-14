@@ -7,8 +7,6 @@ use prometheus::{Encoder, TextEncoder};
 use std::net::IpAddr;
 use std::str::FromStr;
 use std::sync::Arc;
-use tokio::net::UnixListener;
-use tokio_stream::wrappers::UnixListenerStream;
 use warp::{path, Filter};
 
 pub mod app;
@@ -238,28 +236,16 @@ async fn main() -> Result<()> {
 
     let server = warp::serve(site);
 
-    match std::env::var("SOCKPATH") {
-        Ok(sockpath) => {
-            let _ = std::fs::remove_file(&sockpath);
-            let listener = UnixListener::bind(sockpath)?;
-            let incoming = UnixListenerStream::new(listener);
-            server.run_incoming(incoming).await;
+    server
+        .run((
+            IpAddr::from_str(&std::env::var("HOST").unwrap_or("::".into()))?,
+            std::env::var("PORT")
+                .unwrap_or("3030".into())
+                .parse::<u16>()?,
+        ))
+        .await;
 
-            Ok(())
-        }
-        Err(_) => {
-            server
-                .run((
-                    IpAddr::from_str(&std::env::var("HOST").unwrap_or("::".into()))?,
-                    std::env::var("PORT")
-                        .unwrap_or("3030".into())
-                        .parse::<u16>()?,
-                ))
-                .await;
-
-            Ok(())
-        }
-    }
+    Ok(())
 }
 
 include!(concat!(env!("OUT_DIR"), "/templates.rs"));

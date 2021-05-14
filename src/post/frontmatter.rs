@@ -81,6 +81,17 @@ impl Data {
                             };
                         }
                     }
+                    '\r' => {
+                        if *end {
+                            offset = idx + 2; // Special case for windows: \r\n
+                            break 'parse;
+                        } else {
+                            state = State::ReadingFrontMatter {
+                                buf: String::new(),
+                                line_start: true,
+                            };
+                        }
+                    }
                     _ => panic!("Expected newline, got {:?}", ch),
                 },
                 State::ReadingFrontMatter { buf, line_start } => match ch {
