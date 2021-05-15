@@ -177,7 +177,7 @@ async fn main() -> Result<()> {
         .run((
             IpAddr::from_str(&std::env::var("HOST").unwrap_or("::".into()))?,
             std::env::var("PORT")
-                .unwrap_or("3030".into())
+                .unwrap_or("4095".into())
                 .parse::<u16>()?,
         ))
         .await;

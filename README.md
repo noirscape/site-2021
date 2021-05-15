@@ -12,7 +12,7 @@ My main aim in publishing this repo is to make it easy for others to do somethin
 
 ### Things needed for windows deployment
 
-* Removed socket listener: this thing can just be served over port 3030 and I at times need to cross-platform dev. UnixListener doesn't exist on windows sooooo yeah. Not everyone has access to Unix only.
+* Removed socket listener: this thing can just be served over port 4095 and I at times need to cross-platform dev. UnixListener doesn't exist on windows sooooo yeah. Not everyone has access to Unix only.
 * Added special check for `\r` in the frontmatter: it is a newline format on windows.
 * Removed nix dev files.
 * Removed vscode settings.
