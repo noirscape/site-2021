@@ -1,4 +1,4 @@
-let defaultPort = env:PORT ? 3030
+let defaultPort = env:PORT ? 4095
 
 let Config =
       { Type =
