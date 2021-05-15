@@ -30,3 +30,4 @@ My main aim in publishing this repo is to make it easy for others to do somethin
 * Renamed executable to just site.
 * Changed avatar and favicons
 * Removed talks - I don't give them.
+* Slimmed down JSON parser.

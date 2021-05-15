@@ -47,7 +47,6 @@ pub struct State {
     pub resume: String,
     pub blog: Vec<Post>,
     pub gallery: Vec<Post>,
-    pub talks: Vec<Post>,
     pub everything: Vec<Post>,
     pub jf: jsonfeed::Feed,
     pub sitemap: Vec<u8>,
@@ -60,16 +59,13 @@ pub async fn init(cfg: PathBuf) -> Result<State> {
     let resume: String = markdown::render(&resume)?;
     let blog = crate::post::load("blog").await?;
     let gallery = crate::post::load("gallery").await?;
-    let talks = crate::post::load("talks").await?;
     let mut everything: Vec<Post> = vec![];
 
     {
         let blog = blog.clone();
         let gallery = gallery.clone();
-        let talks = talks.clone();
         everything.extend(blog.iter().cloned());
         everything.extend(gallery.iter().cloned());
-        everything.extend(talks.iter().cloned());
     };
 
     everything.sort();
@@ -120,7 +116,6 @@ pub async fn init(cfg: PathBuf) -> Result<State> {
         resume,
         blog,
         gallery,
-        talks,
         everything,
         jf: jfb.build(),
         sitemap: sm,

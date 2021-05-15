@@ -8,10 +8,9 @@ pub struct Data {
     pub date: String,
     pub series: Option<String>,
     pub tags: Option<Vec<String>>,
-    pub slides_link: Option<String>,
     pub image: Option<String>,
     pub thumb: Option<String>,
-    pub show: Option<bool>,
+    // pub show: Option<bool>,
     pub redirect_to: Option<String>,
 }
 

@@ -1,8 +1,6 @@
-use crate::templates::Html;
 use color_eyre::eyre::{Result, WrapErr};
-use comrak::nodes::{Ast, AstNode, NodeValue};
+use comrak::nodes::{AstNode, NodeValue};
 use comrak::{format_html, markdown_to_html, parse_document, Arena, ComrakOptions};
-use std::cell::RefCell;
 use url::Url;
 
 pub fn render(inp: &str) -> Result<String> {
@@ -29,7 +27,6 @@ pub fn render(inp: &str) -> Result<String> {
                 if u.scheme() != "conversation" {
                     return Ok(());
                 }
-                let parent = node.parent().unwrap();
                 node.detach();
                 let mut message = vec![];
                 for child in node.children() {
@@ -39,16 +36,6 @@ pub fn render(inp: &str) -> Result<String> {
                 let mut message = markdown_to_html(message, &options);
                 crop_letters(&mut message, 3);
                 message.drain((message.len() - 5)..);
-                let mood = without_first(u.path());
-                let name = u.host_str().unwrap_or("Mara");
-
-                let mut html = vec![];
-                crate::templates::mara(&mut html, mood, name, Html(message.trim().into()))?;
-
-                let new_node = arena.alloc(AstNode::new(RefCell::new(Ast::new(
-                    NodeValue::HtmlInline(html),
-                ))));
-                parent.append(new_node);
 
                 Ok(())
             }
@@ -71,14 +58,6 @@ where
         iter_nodes(c, f)?;
     }
     Ok(())
-}
-
-fn without_first(string: &str) -> &str {
-    string
-        .char_indices()
-        .nth(1)
-        .and_then(|(i, _)| string.get(i..))
-        .unwrap_or("")
 }
 
 fn crop_letters(s: &mut String, pos: usize) {
