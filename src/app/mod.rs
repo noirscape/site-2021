@@ -75,7 +75,7 @@ pub async fn init(cfg: PathBuf) -> Result<State> {
 
     let mut jfb = jsonfeed::Feed::builder()
         .title("Techpriest's Blog")
-        .description("My blog posts and rants about various technology things.")
+        .description("Tech talk, video games talk, moderation talk and rambles about just about anything really.")
         .author(
             jsonfeed::Author::new()
                 .name("Techpriest")
