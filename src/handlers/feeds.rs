@@ -1,23 +1,16 @@
 use super::LAST_MODIFIED;
 use crate::{app::State, templates};
 use lazy_static::lazy_static;
-use prometheus::{opts, register_int_counter_vec, IntCounterVec};
 use std::{io, sync::Arc};
 use tracing::instrument;
 use warp::{http::Response, Rejection, Reply};
 
 lazy_static! {
-    pub static ref HIT_COUNTER: IntCounterVec = register_int_counter_vec!(
-        opts!("feed_hits", "Number of hits to various feeds"),
-        &["kind"]
-    )
-    .unwrap();
     pub static ref ETAG: String = format!(r#"W/"{}""#, uuid::Uuid::new_v4().to_simple());
 }
 
 #[instrument(skip(state))]
 pub async fn jsonfeed(state: Arc<State>, since: Option<String>) -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["json"]).inc();
     let state = state.clone();
     Ok(warp::reply::json(&state.jf))
 }
@@ -47,7 +40,6 @@ pub async fn atom(state: Arc<State>, since: Option<String>) -> Result<impl Reply
         }
     }
 
-    HIT_COUNTER.with_label_values(&["atom"]).inc();
     let state = state.clone();
     let mut buf = Vec::new();
     templates::blog_atom_xml(&mut buf, state.everything.clone())
@@ -80,7 +72,6 @@ pub async fn rss(state: Arc<State>, since: Option<String>) -> Result<impl Reply,
         }
     }
 
-    HIT_COUNTER.with_label_values(&["rss"]).inc();
     let state = state.clone();
     let mut buf = Vec::new();
     templates::blog_rss_xml(&mut buf, state.everything.clone())
@@ -98,7 +89,6 @@ pub async fn rss(state: Arc<State>, since: Option<String>) -> Result<impl Reply,
 
 #[instrument(skip(state))]
 pub async fn sitemap(state: Arc<State>) -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["sitemap"]).inc();
     let state = state.clone();
     Response::builder()
         .status(200)

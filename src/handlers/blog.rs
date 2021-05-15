@@ -4,19 +4,9 @@ use crate::{
     post::Post,
     templates::{self, Html, RenderRucte},
 };
-use lazy_static::lazy_static;
-use prometheus::{opts, register_int_counter_vec, IntCounterVec};
 use std::sync::Arc;
 use tracing::{error, instrument};
 use warp::{http::Response, Rejection, Reply};
-
-lazy_static! {
-    static ref HIT_COUNTER: IntCounterVec = register_int_counter_vec!(
-        opts!("blogpost_hits", "Number of hits to blogposts"),
-        &["name"]
-    )
-    .unwrap();
-}
 
 #[instrument(skip(state))]
 pub async fn index(state: Arc<State>) -> Result<impl Reply, Rejection> {
@@ -83,9 +73,6 @@ pub async fn post_view(name: String, state: Arc<State>) -> Result<impl Reply, Re
     match want {
         None => Err(PostNotFound("blog".into(), name).into()),
         Some(post) => {
-            HIT_COUNTER
-                .with_label_values(&[name.clone().as_str()])
-                .inc();
             let body = Html(post.body_html.clone());
             Response::builder()
                 .header("Last-Modified", &*LAST_MODIFIED)

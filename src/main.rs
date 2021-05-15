@@ -2,8 +2,6 @@
 extern crate tracing;
 
 use color_eyre::eyre::Result;
-use hyper::{header::CONTENT_TYPE, Body, Response};
-use prometheus::{Encoder, TextEncoder};
 use std::net::IpAddr;
 use std::str::FromStr;
 use std::sync::Arc;
@@ -12,7 +10,6 @@ use warp::{path, Filter};
 pub mod app;
 pub mod handlers;
 pub mod post;
-pub mod signalboost;
 
 use app::State;
 
@@ -75,27 +72,12 @@ async fn main() -> Result<()> {
             .and_then(handlers::gallery::post_view),
     );
 
-    let talk_base = warp::path!("talks" / ..);
-    let talk_index = talk_base
-        .and(warp::path::end())
-        .and(with_state(state.clone()))
-        .and_then(handlers::talks::index);
-    let talk_post_view = talk_base.and(
-        warp::path!(String)
-            .and(with_state(state.clone()))
-            .and(warp::get())
-            .and_then(handlers::talks::post_view),
-    );
-
     let index = warp::get().and(path::end().and_then(handlers::index));
     let contact = warp::path!("contact").and_then(handlers::contact);
     let feeds = warp::path!("feeds").and_then(handlers::feeds);
     let resume = warp::path!("resume")
         .and(with_state(state.clone()))
         .and_then(handlers::resume);
-    let signalboost = warp::path!("signalboost")
-        .and(with_state(state.clone()))
-        .and_then(handlers::signalboost);
     let patrons = warp::path!("patrons")
         .and(with_state(state.clone()))
         .and_then(handlers::patrons);
@@ -138,27 +120,9 @@ async fn main() -> Result<()> {
         .and(with_state(state.clone()))
         .and_then(handlers::feeds::sitemap);
 
-    let go_vanity_jsonfeed = warp::path("jsonfeed")
-        .and(warp::any().map(move || "christine.website/jsonfeed"))
-        .and(warp::any().map(move || "https://tulpa.dev/Xe/jsonfeed"))
-        .and(warp::any().map(move || "master"))
-        .and_then(go_vanity::gitea);
-
-    let metrics_endpoint = warp::path("metrics").and(warp::path::end()).map(move || {
-        let encoder = TextEncoder::new();
-        let metric_families = prometheus::gather();
-        let mut buffer = vec![];
-        encoder.encode(&metric_families, &mut buffer).unwrap();
-        Response::builder()
-            .status(200)
-            .header(CONTENT_TYPE, encoder.format_type())
-            .body(Body::from(buffer))
-            .unwrap()
-    });
-
     let static_pages = index
         .or(feeds)
-        .or(resume.or(signalboost))
+        .or(resume)
         .or(patrons)
         .or(jsonfeed.or(atom.or(sitemap)).or(rss))
         .or(favicon.or(robots).or(sw))
@@ -174,7 +138,6 @@ async fn main() -> Result<()> {
     let dynamic_pages = blog_index
         .or(series.or(series_view).or(post_view))
         .or(gallery_index.or(gallery_post_view))
-        .or(talk_index.or(talk_post_view))
         .map(|reply| {
             warp::reply::with_header(
                 reply,
@@ -185,27 +148,8 @@ async fn main() -> Result<()> {
 
     let site = static_pages
         .or(dynamic_pages)
-        .or(healthcheck.or(metrics_endpoint).or(go_vanity_jsonfeed))
+        .or(healthcheck)
         .or(files.or(css))
-        .map(|reply| {
-            warp::reply::with_header(
-                reply,
-                "X-Hacker",
-                "If you are reading this, check out /signalboost to find people for your team",
-            )
-        })
-        .map(|reply| warp::reply::with_header(reply, "X-Clacks-Overhead", "GNU Ashlynn"))
-        .map(|reply| {
-            warp::reply::with_header(
-                reply,
-                "Link",
-                format!(
-                    r#"<{}>; rel="webmention""#,
-                    std::env::var("WEBMENTION_URL")
-                        .unwrap_or("https://mi.within.website/api/webmention/accept".to_string())
-                ),
-            )
-        })
         .with(warp::log(APPLICATION_NAME))
         .recover(handlers::rejection);
 
@@ -213,13 +157,6 @@ async fn main() -> Result<()> {
     {
         match sdnotify::SdNotify::from_env() {
             Ok(ref mut n) => {
-                // shitty heuristic for detecting if we're running in prod
-                tokio::spawn(async {
-                    if let Err(why) = app::poke::the_cloud().await {
-                        error!("Unable to poke the cloud: {}", why);
-                    }
-                });
-
                 n.notify_ready().map_err(|why| {
                     error!("can't signal readiness to systemd: {}", why);
                     why

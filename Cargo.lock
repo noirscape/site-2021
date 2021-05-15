@@ -210,21 +210,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3c69b077ad434294d3ce9f1f6143a2a4b89a8a2d54ef813d85003a4fd1137fd"
 
 [[package]]
-name = "cfcache"
-version = "0.1.0"
-dependencies = [
- "eyre",
- "kankyo",
- "reqwest",
- "serde",
- "serde_json",
- "thiserror",
- "tokio",
- "tracing",
- "tracing-futures",
-]
-
-[[package]]
 name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -335,15 +320,6 @@ name = "cpuid-bool"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8aebca1129a03dc6dc2b127edd729435bbc4a37e1d5f4d7513165089ceb02634"
-
-[[package]]
-name = "crc32fast"
-version = "1.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "81156fece84ab6a9f2afdb109ce3ae577e42b1228441eded99bd77f627953b1a"
-dependencies = [
- "cfg-if",
-]
 
 [[package]]
 name = "dhall"
@@ -488,18 +464,6 @@ name = "fake-simd"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e88a8acf291dafb59c2d96e8f59828f3838bb1a70398823ade51a84de6a6deed"
-
-[[package]]
-name = "flate2"
-version = "1.0.20"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cd3aec53de10fe96d7d8c565eb17f2c687bb5518a2ec453b5b1252964526abe0"
-dependencies = [
- "cfg-if",
- "crc32fast",
- "libc",
- "miniz_oxide",
-]
 
 [[package]]
 name = "fnv"
@@ -682,15 +646,6 @@ name = "glob"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
-
-[[package]]
-name = "go_vanity"
-version = "0.2.0"
-dependencies = [
- "mime",
- "ructe",
- "warp",
-]
 
 [[package]]
 name = "h2"
@@ -1023,23 +978,6 @@ name = "memchr"
 version = "2.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0ee1c47aaa256ecabcaea351eae4a9b01ef39ed810004e298d2511ed284b1525"
-
-[[package]]
-name = "mi"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "color-eyre",
- "envy",
- "pretty_env_logger",
- "reqwest",
- "serde",
- "serde_json",
- "thiserror",
- "tokio",
- "tracing",
- "tracing-futures",
-]
 
 [[package]]
 name = "mime"
@@ -1459,36 +1397,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1e0704ee1a7e00d7bb417d0770ea303c1bccbabf0ef1667dae92b5967f5f8a71"
 dependencies = [
  "unicode-xid",
-]
-
-[[package]]
-name = "procfs"
-version = "0.9.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ab8809e0c18450a2db0f236d2a44ec0b4c1412d0eb936233579f0990faa5d5cd"
-dependencies = [
- "bitflags",
- "byteorder",
- "flate2",
- "hex",
- "lazy_static",
- "libc",
-]
-
-[[package]]
-name = "prometheus"
-version = "0.12.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5986aa8d62380092d2f50f8b1cdba9cb9b6731ffd4b25b51fd126b6c3e05b99c"
-dependencies = [
- "cfg-if",
- "fnv",
- "lazy_static",
- "libc",
- "memchr",
- "parking_lot",
- "procfs",
- "thiserror",
 ]
 
 [[package]]
@@ -1976,6 +1884,47 @@ name = "tap"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "55937e1799185b12863d447f42597ed69d9928686b8d88a1df17376a097d8369"
+
+[[package]]
+name = "techpriestsite"
+version = "2.3.0"
+dependencies = [
+ "chrono",
+ "color-eyre",
+ "comrak",
+ "envy",
+ "eyre",
+ "futures",
+ "glob",
+ "hyper",
+ "jsonfeed",
+ "kankyo",
+ "lazy_static",
+ "log",
+ "mime",
+ "patreon",
+ "pfacts",
+ "pretty_env_logger",
+ "rand 0.7.3",
+ "reqwest",
+ "ructe",
+ "sdnotify",
+ "serde",
+ "serde_dhall",
+ "serde_json",
+ "serde_yaml",
+ "sitemap",
+ "thiserror",
+ "tokio",
+ "tokio-stream",
+ "tracing",
+ "tracing-futures",
+ "tracing-subscriber",
+ "url",
+ "uuid",
+ "warp",
+ "xml-rs",
+]
 
 [[package]]
 name = "tempfile"
@@ -2583,51 +2532,6 @@ name = "xdg"
 version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d089681aa106a86fade1b0128fb5daf07d5867a509ab036d99988dec80429a57"
-
-[[package]]
-name = "xesite"
-version = "2.3.0"
-dependencies = [
- "cfcache",
- "chrono",
- "color-eyre",
- "comrak",
- "envy",
- "eyre",
- "futures",
- "glob",
- "go_vanity",
- "hyper",
- "jsonfeed",
- "kankyo",
- "lazy_static",
- "log",
- "mi",
- "mime",
- "patreon",
- "pfacts",
- "pretty_env_logger",
- "prometheus",
- "rand 0.8.3",
- "reqwest",
- "ructe",
- "sdnotify",
- "serde",
- "serde_dhall",
- "serde_json",
- "serde_yaml",
- "sitemap",
- "thiserror",
- "tokio",
- "tokio-stream",
- "tracing",
- "tracing-futures",
- "tracing-subscriber",
- "url",
- "uuid",
- "warp",
- "xml-rs",
-]
 
 [[package]]
 name = "xml-rs"

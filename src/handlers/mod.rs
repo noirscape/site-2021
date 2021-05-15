@@ -4,7 +4,6 @@ use crate::{
 };
 use chrono::{Datelike, Timelike, Utc};
 use lazy_static::lazy_static;
-use prometheus::{opts, register_int_counter_vec, IntCounterVec};
 use std::{convert::Infallible, fmt, sync::Arc};
 use tracing::instrument;
 use warp::{
@@ -13,9 +12,6 @@ use warp::{
 };
 
 lazy_static! {
-    static ref HIT_COUNTER: IntCounterVec =
-        register_int_counter_vec!(opts!("hits", "Number of hits to various pages"), &["page"])
-            .unwrap();
     pub static ref LAST_MODIFIED: String = {
         let now = Utc::now();
         format!(
@@ -33,7 +29,6 @@ lazy_static! {
 
 #[instrument]
 pub async fn index() -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["index"]).inc();
     Response::builder()
         .header("Last-Modified", &*LAST_MODIFIED)
         .html(|o| templates::index_html(o))
@@ -41,7 +36,6 @@ pub async fn index() -> Result<impl Reply, Rejection> {
 
 #[instrument]
 pub async fn contact() -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["contact"]).inc();
     Response::builder()
         .header("Last-Modified", &*LAST_MODIFIED)
         .html(|o| templates::contact_html(o))
@@ -49,7 +43,6 @@ pub async fn contact() -> Result<impl Reply, Rejection> {
 
 #[instrument]
 pub async fn feeds() -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["feeds"]).inc();
     Response::builder()
         .header("Last-Modified", &*LAST_MODIFIED)
         .html(|o| templates::feeds_html(o))
@@ -57,7 +50,6 @@ pub async fn feeds() -> Result<impl Reply, Rejection> {
 
 #[instrument(skip(state))]
 pub async fn resume(state: Arc<State>) -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["resume"]).inc();
     let state = state.clone();
     Response::builder()
         .header("Last-Modified", &*LAST_MODIFIED)
@@ -66,7 +58,6 @@ pub async fn resume(state: Arc<State>) -> Result<impl Reply, Rejection> {
 
 #[instrument(skip(state))]
 pub async fn patrons(state: Arc<State>) -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["patrons"]).inc();
     let state = state.clone();
     match &state.patrons {
         None => Response::builder().status(500).html(|o| {
@@ -81,18 +72,8 @@ pub async fn patrons(state: Arc<State>) -> Result<impl Reply, Rejection> {
     }
 }
 
-#[instrument(skip(state))]
-pub async fn signalboost(state: Arc<State>) -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["signalboost"]).inc();
-    let state = state.clone();
-    Response::builder()
-        .header("Last-Modified", &*LAST_MODIFIED)
-        .html(|o| templates::signalboost_html(o, state.signalboost.clone()))
-}
-
 #[instrument]
 pub async fn not_found() -> Result<impl Reply, Rejection> {
-    HIT_COUNTER.with_label_values(&["not_found"]).inc();
     Response::builder()
         .header("Last-Modified", &*LAST_MODIFIED)
         .html(|o| templates::notfound_html(o, "some path".into()))
@@ -101,7 +82,6 @@ pub async fn not_found() -> Result<impl Reply, Rejection> {
 pub mod blog;
 pub mod feeds;
 pub mod gallery;
-pub mod talks;
 
 #[derive(Debug, thiserror::Error)]
 struct PostNotFound(String, String);
@@ -125,37 +105,23 @@ impl fmt::Display for SeriesNotFound {
 
 impl warp::reject::Reject for SeriesNotFound {}
 
-lazy_static! {
-    static ref REJECTION_COUNTER: IntCounterVec = register_int_counter_vec!(
-        opts!("rejections", "Number of rejections by kind"),
-        &["kind"]
-    )
-    .unwrap();
-}
-
 #[instrument]
 pub async fn rejection(err: Rejection) -> Result<impl Reply, Infallible> {
     let path: String;
     let code;
 
     if err.is_not_found() {
-        REJECTION_COUNTER.with_label_values(&["404"]).inc();
         path = "".into();
         code = StatusCode::NOT_FOUND;
     } else if let Some(SeriesNotFound(series)) = err.find() {
-        REJECTION_COUNTER
-            .with_label_values(&["SeriesNotFound"])
-            .inc();
         log::error!("invalid series {}", series);
         path = format!("/blog/series/{}", series);
         code = StatusCode::NOT_FOUND;
     } else if let Some(PostNotFound(kind, name)) = err.find() {
-        REJECTION_COUNTER.with_label_values(&["PostNotFound"]).inc();
         log::error!("unknown post {}/{}", kind, name);
         path = format!("/{}/{}", kind, name);
         code = StatusCode::NOT_FOUND;
     } else {
-        REJECTION_COUNTER.with_label_values(&["Other"]).inc();
         log::error!("unhandled rejection: {:?}", err);
         path = format!("weird rejection: {:?}", err);
         code = StatusCode::INTERNAL_SERVER_ERROR;

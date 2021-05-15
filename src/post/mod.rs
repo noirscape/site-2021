@@ -12,7 +12,6 @@ pub struct Post {
     pub link: String,
     pub body_html: String,
     pub date: DateTime<FixedOffset>,
-    pub mentions: Vec<mi::WebMention>,
 }
 
 impl Into<jsonfeed::Item> for Post {
@@ -20,14 +19,14 @@ impl Into<jsonfeed::Item> for Post {
         let mut result = jsonfeed::Item::builder()
             .title(self.front_matter.title)
             .content_html(self.body_html)
-            .id(format!("https://christine.website/{}", self.link))
-            .url(format!("https://christine.website/{}", self.link))
+            .id(format!("https://noirscape.dev/{}", self.link))
+            .url(format!("https://noirscape.dev/{}", self.link))
             .date_published(self.date.to_rfc3339())
             .author(
                 jsonfeed::Author::new()
-                    .name("Christine Dodrill")
-                    .url("https://christine.website")
-                    .avatar("https://christine.website/static/img/avatar.png"),
+                    .name("Techpriest")
+                    .url("https://noirscape.dev")
+                    .avatar("https://noirscape.dev/static/img/avatar.png"),
             );
 
         let mut tags: Vec<String> = vec![];
@@ -87,26 +86,16 @@ async fn read_post(dir: &str, fname: PathBuf) -> Result<Post> {
             .with_timezone(&Utc)
             .into();
 
-    let mentions: Vec<mi::WebMention> = match std::env::var("MI_TOKEN") {
-        Ok(token) => mi::Client::new(token.to_string(), crate::APPLICATION_NAME.to_string())?
-            .mentioners(format!("https://christine.website/{}", link))
-            .await
-            .map_err(|why| tracing::error!("error: can't load mentions for {}: {}", link, why))
-            .unwrap_or(vec![]),
-        Err(_) => vec![],
-    };
-
     Ok(Post {
         front_matter,
         link,
         body_html,
         date,
-        mentions,
     })
 }
 
 pub async fn load(dir: &str) -> Result<Vec<Post>> {
-    let futs = glob(&format!("{}/*.markdown", dir))?
+    let futs = glob(&format!("{}/*.md", dir))?
         .filter_map(Result::ok)
         .map(|fname| read_post(dir, fname));
 
@@ -140,13 +129,6 @@ mod tests {
     async fn gallery() -> Result<()> {
         let _ = pretty_env_logger::try_init();
         load("gallery").await?;
-        Ok(())
-    }
-
-    #[tokio::test]
-    async fn talks() -> Result<()> {
-        let _ = pretty_env_logger::try_init();
-        load("talks").await?;
         Ok(())
     }
 }

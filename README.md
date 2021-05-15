@@ -16,3 +16,17 @@ My main aim in publishing this repo is to make it easy for others to do somethin
 * Added special check for `\r` in the frontmatter: it is a newline format on windows.
 * Removed nix dev files.
 * Removed vscode settings.
+
+### Branding related stuff
+
+* Took out a ton of external site refs.
+* Localized prism.css
+* Disabled poking external services.
+* Removed signalboost.
+* Removed mi.
+* Greatly simplify config.
+* Took out prometheus. (Restored fire to humanity as well, zeus disposed).
+* Removed unused crates.
+* Renamed executable to just site.
+* Changed avatar and favicons
+* Removed talks - I don't give them.

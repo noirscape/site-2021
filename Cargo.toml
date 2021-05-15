@@ -1,10 +1,10 @@
 [package]
-name = "xesite"
+name = "techpriestsite"
 version = "2.3.0"
-authors = ["Christine Dodrill <me@christine.website>"]
+authors = ["Lucy V. <mementomori at head dot pet>", "Christine Dodrill <me@christine.website>"]
 edition = "2018"
 build = "src/build.rs"
-repository = "https://github.com/Xe/site"
+repository = "https://github.com/noirscape/site"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -20,7 +20,6 @@ kankyo = "0.3"
 lazy_static = "1.4"
 log = "0.4"
 mime = "0.3.0"
-prometheus = { version = "0.12", default-features = false, features = ["process"] }
 rand = "0"
 reqwest = { version = "0.11", features = ["json"] }
 serde_dhall = "0.10.1"
@@ -39,10 +38,7 @@ url = "2"
 uuid = { version = "0.8", features = ["serde", "v4"] }
 
 # workspace dependencies
-cfcache = { path = "./lib/cfcache" }
-go_vanity = { path = "./lib/go_vanity" }
 jsonfeed = { path = "./lib/jsonfeed" }
-mi = { path = "./lib/mi" }
 patreon = { path = "./lib/patreon" }
 
 # os-specific dependencies

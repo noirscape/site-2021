@@ -1,4 +1,2 @@
 User-Agent: *
-Sitemap: https://christine.website/sitemap.xml
-Disallow: /metrics
-Disallow: /.within/health
+Sitemap: https://noirscape.dev/sitemap.xml

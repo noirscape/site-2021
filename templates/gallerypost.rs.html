@@ -7,40 +7,40 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@@theprincessxena" />
+<meta name="twitter:site" content="@@mementomoritech" />
 <meta name="twitter:title" content="@post.front_matter.title" />
 <meta name="twitter:description" content="Posted on @post.date.format("%Y-%m-%d")" />
 
 <!-- Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="@post.front_matter.title" />
-<meta property="og:site_name" content="Christine Dodrill's Blog" />
+<meta property="og:site_name" content="Techpriest's Blog" />
 
 <!-- Description -->
-<meta name="description" content="@post.front_matter.title - Christine Dodrill's Blog" />
-<meta name="author" content="Christine Dodrill">
+<meta name="description" content="@post.front_matter.title - Techpriest's Blog" />
+<meta name="author" content="Techpriest">
 
-<link rel="canonical" href="https://christine.website/@post.link">
+<link rel="canonical" href="https://noirscape.dev/@post.link">
 
 <script type="application/ld+json">
  @{
    "@@context": "http://schema.org",
    "@@type": "Article",
    "headline": "@post.front_matter.title",
-   "image": "https://christine.website/static/img/avatar.png",
-   "url": "https://christine.website/@post.link",
+   "image": "https://noirscape.dev/static/img/avatar.png",
+   "url": "https://noirscape.dev/@post.link",
    "datePublished": "@post.date.format("%Y-%m-%d")",
    "mainEntityOfPage": @{
        "@@type": "WebPage",
-       "@@id": "https://christine.website/@post.link"
+       "@@id": "https://noirscape.dev/@post.link"
    @},
    "author": @{
        "@@type": "Person",
-       "name": "Christine Dodrill"
+       "name": "Techpriest"
    @},
    "publisher": @{
        "@@type": "Person",
-       "name": "Christine Dodrill"
+       "name": "Techpriest"
    @}
  @}
 </script>
@@ -109,7 +109,7 @@ function share_on_mastodon() @{
                 }
 
                 // Tagging users, such as offical accounts or the author of the post 
-                var author   = "@@cadey@@mst3k.interlinked.me"; 
+                var author   = "@@techpriest@@raxx.la"; 
 
                 // Create the Share URL
                 // https://someinstance.tld/share?text=URL%20encoded%20text

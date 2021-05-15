@@ -11,7 +11,7 @@ var preLoad = function () {
   console.log('[PWA Builder] Install Event processing');
   return caches.open(cacheName).then(function (cache) {
     console.log('[PWA Builder] Cached index and offline page during Install');
-    return cache.addAll(['/blog/', '/blog', '/', '/contact', '/resume', '/talks', '/gallery', '/signalboost']);
+    return cache.addAll(['/blog/', '/blog', '/', '/contact', '/resume', '/gallery', '/signalboost']);
   });
 };
 
