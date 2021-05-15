@@ -1,0 +1,101 @@
+@use chrono::{Datelike, Utc};
+
+@(title: Option<&str>, styles: Option<&str>)
+
+<!DOCTYPE html>
+<!--
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMdyys+++++++++oyyhdMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMNy+-../+`     `ydddyy-  `-/odMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMmy/.  ymMMMMm/```-dMMMMMMm`     +::+hMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMms-     `mMMMMMMMMMMMMMMMMMMMmy+:/mMMMms-:yNMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMh-`+y+-`:+mMMMMMMMNNdmMMMdNMMMMMMMMMMMMMMMm  `/dMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMo.-yMMMMMMMMMMMdy+/-`  /MMM dMMy.:/shMMMMMMMy     /dMMMMMMMMMMMMMMM
+MMMMMMMMMMMh` `NMMMMMMMMNo:`  ``    /mmm ymmy     `:odMMMMds`.+s//dMMMMMMMMMMMMM
+MMMMMMMMMm.    sMMMMMNy.     sMMN+ o/MMM dMMN.::/:`   ./mMMMMMMMMh:+NMMMMMMMMMMM
+MMMMMMMMs     /NMMMN/     ``:NmNMMh :mmd sNNh     .//.   -hMMMMMMMM+-mMMMMMMMMMM
+MMMMMMM+`oNNydMMMm+     .hMMNo .dMMy.hNN:            -+`   -mMMMMMh  `hMMMMMMMMM
+MMMMMM+ hMMMMMMMy`      /MNMMMy. sMMd`hM:              o-    +MMMM:    sMMMMMMMM
+MMMMM/ sMMMMMMM/        `..+MMMd` :MMh.m:               +     :NMMN/   `mMMMMMMM
+MMMMy  `sMMMMM+    `+ss:NMMo-mMMm- -/-yM:                s     -NMMMMMmy mMMMMMM
+MMMm    .NMMMo    +MMMMMMMMMh`sMMN:/MMMM:           o-   ./     -MMMMMMM-/MMMMMM
+MMM+   `sMMMh     sMMMMMMMMMMN--mNs`NMMM:           yh    o      sMMMMMMN`dMMMMM
+MMM.`hmMMMMM.     :mMNo--------    .----`            hd   +      `mMMMms- /MMMMM
+MMm /MMMMMMd     .s+ms dMMMMMMMMMMMMMMMMo       .  :  +No :       sMMM.   -MMMMM
+MMd /MMMMMMh     .ss.: NMMMMNs//////yMMMy   `.+s  /NN+ mM//       /MMM+   `NMMMM
+MMd .hNMMMMh    +MMMm- NMMMy-dMMMMMMs-NMy   -:`  :MMMm `my.       -MMMMdo- NMMMM
+MMd    /MMMh   /:/hNm/ NMMN`mMMMMMMMM-sMy      -oMMMMN: ./-./:    /MMMMMMh`NMMMM
+MMN`   -MMMd  .MMd+-   NMMN`mMMMMMMMM-yMy  ` /mMMMMMMMd     ./    sMMMMMMs-MMMMM
+MMM. `+dMMMM. oMMMy    mMMMm:yMMMMMN/+MMs :   `///////:    `s`   `mMMMMMm:+MMMMM
+MMM+ hMMMMMMh sMMMo    `----./+///++/.-.-`N:     .-.``    .s`    yMMMy`  `dMMMMM
+MMMm -NMMMMMM+/MMMMy:  yNMMMd/:-``.:s+.yN-h-`d:/NMds:-::`:/     .MMMm`   +MMMMMM
+MMMMh +NMMMMMN/:dMMMMNo-mMMMNho-+dNy-+MM/    `:NMMmo-  `/      -MMMMN+  `NMMMMMM
+MMMMM/  .-+MMMN+`/hMMMM:-sso:ooys/:smMd/       `oMo:          :mMMMMMMs.mMMMMMMM
+MMMMMMo    :MMMMy  `...  ..-/.shhNMNy:+y: ` :..s +.          +MMMMMMMN.yMMMMMMMM
+MMMMMMMo   yMMMMMN:          `yho/-``.--` d:d+:o +`        .dMMMNmMMh.dMMMMMMMMM
+MMMMMMMMy`/NMMMMMMMm-`          hds/m-mM  /` ` . o`      -dMMMM+    :NMMMMMMMMMM
+MMMMMMMMMN:.yMMMMMMMMN+.        :-:-y.hd -/://:s:o    `/mMMMMM:    oMMMMMMMMMMMM
+MMMMMMMMMMMd:.+:``+dMMMMmy+-                      ./shMMMMMMMMN` smMMMMMMMMMMMMM
+MMMMMMMMMMMMMh:     hMMMMMMMmho+.`          `./oymMMMMMMMMMMMh:omMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMN+`  mMMMMMMMMMMMMMMMmmmmmmMMMMMMMMMMh/- .+y+-sMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMh/./ymMMm+:sydMMMMMMMMMMMMMMMMMMMM     -odMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMmo:..     `MMMMMMMm.`  :NMMMNdo`-:oNMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMmyo/.  :ssyhhs.     `/-//syNMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmmhhhhsssyhhhdmmMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+
+"There is no truth in flesh, only betrayal."
+"There is no strength in flesh, only weakness."
+"There is no constancy in flesh, only decay."
+"There is no certainty in flesh but death."
+~ Credo Omnissiah
+-->
+<html lang="en">
+    <head>
+        @if title.is_some() {
+        <title>@title.unwrap() - Techpriest</title>
+        } else {
+        <title>Techpriest</title>
+        }
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/hack.css" />
+        <link rel="stylesheet" href="/css/gruvbox-dark.css" />
+        <link rel="stylesheet" href="/css/shim.css" />
+        <link rel="stylesheet" href="/css/prism.css" />
+        @if Utc::now().month() == 12 || Utc::now().month() == 1 || Utc::now().month() == 2 { <link rel="stylesheet" href="/css/snow.css" /> }
+        <link rel="manifest" href="/static/manifest.json" />
+
+        <link rel="alternate" title="Techpriest's Blog" type="application/rss+xml" href="https://noirscape.dev/blog.rss" />
+        <link rel="alternate" title="Techpriest's Blog" type="application/json" href="https://noirscape.dev/blog.json" />
+
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/favicon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/static/favicon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/favicon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/static/favicon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/favicon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/static/favicon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/static/favicon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/static/favicon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/favicon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/static/favicon/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/static/favicon/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+        @if styles.is_some() {
+          <style>
+             @styles.unwrap()
+          </style>
+        }
+    </head>
+    <body class="snow hack gruvbox-dark">
+        <div class="container">
+            <header>
+                <p><a href="/">Lucy "Techpriest" V.</a> - <a href="/blog">Blog</a> - <a href="/contact">Contact</a> -<!-- <a href="/gallery">Gallery</a> ---> <a href="/resume">Resume</a> - <a href="/patrons">Patrons</a> - <a href="/feeds">Feeds</a> | <a target="_blank" rel="noopener noreferrer" href="https://wiki.noirscape.dev">Wiki</a>
+            </header>
+
+            <div class="snowframe">

@@ -1,0 +1,13 @@
+@use super::{header_html, footer_html};
+
+@()
+
+@:header_html(Some("Feeds"), None)
+
+<h1>Feeds</h1>
+
+<ul>
+    <li>Blog: <a href="/blog.atom">Atom</a> <a href="/blog.rss">RSS</a> - <a href="/blog.json">JSONFeed</a></li>
+</ul>
+
+@:footer_html()

@@ -1,0 +1,20 @@
+@use patreon::Users;
+@use super::{header_html, footer_html};
+
+@(users: Users)
+
+@:header_html(Some("Patrons"), None)
+
+<h1>Patrons</h1>
+
+<p>These people donate to me on <a href="https://patreon.com/noirscape">Patreon</a>. This list is refreshed every time the site is deployed.</p>
+
+<p>
+    <ul>
+        @for user in users {
+            <li>@user.attributes.full_name</li>
+        }
+    </ul>
+</p>
+
+@:footer_html()

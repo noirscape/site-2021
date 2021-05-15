@@ -1,0 +1,48 @@
+@use super::{header_html, footer_html};
+
+@()
+
+@:header_html(None, None)
+
+<link rel="canonical" href="https://noirscape.dev/">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@@mementomoritech" />
+<meta name="twitter:title" content="Techpriest" />
+<meta name="twitter:description" content="Student" />
+
+<!-- Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Techpriest" />
+<meta property="og:site_name" content="Student" />
+
+<!-- Description -->
+<meta name="description" content="Student" />
+<meta name="author" content="Techpriest">
+
+<div class="grid">
+    <div class="cell -3of12 content">
+        <img src="/static/img/avatar.png" alt="My Avatar">
+        <br />
+        <a href="/contact" class="justify-content-center">Contact Me</a>
+    </div>
+    <div class="cell -9of12 content">
+        <h1>Techpriest</h1>
+        <h4>Student</h4>
+        <h5>Skills</h5>
+        <ul>
+            <li>Mostly unmarketable skills.</li>
+        </ul>
+
+        <h5>Quick Links</h5>
+        <ul>
+            <li><a href="https://github.com/noirscape" rel="me">GitHub</a></li>
+            <li><a href="https://twitter.com/mementomoritech" rel="me">Twitter</a></li>
+            <li><a href="https://raxx.la/techpriest" rel="me">Pleroma</a></li>
+            <li><a href="https://www.patreon.com/noirscape" rel="me">Patreon</a></li>
+        </ul>
+    </div>
+</div>
+
+@:footer_html()

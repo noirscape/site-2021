@@ -1,0 +1,23 @@
+{
+  "name": "Lucy \"Techpriest\" V.",
+  "short_name": "Lucy",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "description": "Blog of Techpriest",
+  "orientation": "any",
+  "icons": [
+    {
+        "src": "/static/favicon/android-chrome-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    },
+    {
+        "src": "/static/favicon/android-chrome-256x256.png",
+        "sizes": "256x256",
+        "type": "image/png"
+    }
+  ]
+}

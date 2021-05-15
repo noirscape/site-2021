@@ -1,0 +1,26 @@
+@use crate::post::Post;
+@use chrono::Utc;
+
+@(posts: Vec<Post>)
+
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>https://noirscape.dev/blog.atom</id>
+  <title>Techpriest's Blog</title>
+  <updated>@Utc::now().to_rfc3339()</updated>
+  <author>
+    <name>Techpriest</name>
+    <email>me@@noirscape.dev</email>
+  </author>
+  <link href="https://noirscape.dev/blog.atom" rel="self"/>
+  <link href="https://noirscape.dev/blog" rel="alternate"/>
+  <generator uri="@env!("CARGO_PKG_REPOSITORY")" version="@env!("CARGO_PKG_VERSION")">@env!("CARGO_PKG_NAME")</generator>
+  @for post in posts {
+    <entry>
+      <id>https://noirscape.dev/@post.link</id>
+      <title>@post.front_matter.title</title>
+      <published>@post.date.to_rfc3339()</published>
+      <link href="https://noirscape.dev/@post.link" rel="alternate"/>
+    </entry>
+  }
+</feed>

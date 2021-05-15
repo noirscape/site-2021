@@ -1,0 +1,30 @@
+@use super::{header_html, footer_html};
+
+@()
+
+@:header_html(Some("Contact"), None)
+
+<h1>Contact Information</h1>
+<div class="grid">
+  <div class="cell -6of12">
+    <h3>Email</h3>
+    <p>mementomori at head dot pet</p>
+
+    <h3>Social Media</h3>
+    <ul>
+      <li><a href="https://github.com/noirscape">Github</a></li>
+      <li><a href="https://twitter.com/MementoMoriTech">Twitter</a></li>
+      <li><a href="https://www.patreon.com/noirscape">Patreon</a></li>
+      <li><a href="https://raxx.la/techpriest">@@techpriest@@raxx.la</a></li>
+    </ul>
+  </div>
+  <div class="cell -6of12">
+    <h3>Other Information</h3>
+    <p>I have a <a href="https://www.patreon.com/cadey">Patreon</a> if you want to send donations.
+
+    <h4>Discord</h4>
+    <p><code>noirscape~#6666</code></p>
+  </div>
+</div>
+
+@:footer_html()

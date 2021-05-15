@@ -1,0 +1,12 @@
+[Unit]
+Description=Techpriest site. The code that powers noirscape.dev
+After=network.target
+StartLimitIntervalSec=0[Service]
+Type=notify
+Restart=always
+RestartSec=1
+User=techpriestsite
+ExecStart=/opt/noirscape.dev/techpriestsite
+
+[Install]
+WantedBy=multi-user.target
