@@ -31,7 +31,7 @@ For a long while, this was more or less a sort of accepted fact; legislation aro
 
 So telemetry, whilst being possible to use for evil, can also be used at least for some good: you can make sure that your software feels good to use and that people won't hate every living second of using the features they really need to use.
 
-But of course, there is always one weird duck in the park. The anti-corporate FOSS community. The lawless fields of FOSS meant that a lot of corporate abuse was afoot (and I have a great example for that, keep reading!), which meant that in general, most of the dislike towards telemetry got rolled into the fairly standard package of "we hate and distrust anything corporate" that a lot of the FOSS crowd seems really willing to repeat.
+But of course, there is always one weird duck in the park. The anti-corporate FOSS community. The lawless fields of telemetry meant that a lot of corporate abuse was afoot, which meant that in general, most of the dislike towards telemetry got rolled into the fairly standard package of "we hate and distrust anything corporate" that a lot of the FOSS crowd seems really willing to repeat.
 
 This eventually all would legally come to a head in the, now notorious, GDPR legislation from the European Union in 2018. The GDPR is something most people remembered for one of these two things:
 
