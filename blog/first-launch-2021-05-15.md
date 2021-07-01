@@ -31,7 +31,7 @@ Okay so this is mostly just interesting for me, since I *need* to document this 
 2. You *normally* don't have to rebuild the application; that part is only needed when you change the templates in a heavy way. Don't do it if it's not needed, deploying takes a bit of time.
 3. Once it's done, push the repo.
 4. Then, pull the repo on the VPS.
-5. Run `deploy_prod.sh` on the VPS.
+5. Restart the systemd service.
 6. ???
 7. Profit.
 

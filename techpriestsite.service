@@ -1,12 +1,13 @@
 [Unit]
 Description=Techpriest site. The code that powers noirscape.dev
-After=network.target
-StartLimitIntervalSec=0[Service]
+After=local-fs.target remote-fs.target network.target
+
+[Service]
 Type=notify
-Restart=always
-RestartSec=1
+Restart=on-abort
 User=techpriestsite
 ExecStart=/opt/noirscape.dev/techpriestsite
+WorkingDirectory=/opt/noirscape.dev
 
 [Install]
 WantedBy=multi-user.target
