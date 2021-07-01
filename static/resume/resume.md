@@ -1,4 +1,4 @@
-# Lucy V.
+# Lucy Stingray
 
 #### Student ICT
 

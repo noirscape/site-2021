@@ -1,7 +1,7 @@
 [package]
 name = "techpriestsite"
-version = "3.0.0"
-authors = ["Lucy V. <mementomori at head dot pet>", "Christine Dodrill <me@christine.website>"]
+version = "3.0.1"
+authors = ["Lucy Stingray <mementomori at head dot pet>", "Christine Dodrill <me@christine.website>"]
 edition = "2018"
 build = "src/build.rs"
 repository = "https://gitlab.noirscape.dev/techpriest/site"
@@ -43,7 +43,7 @@ patreon = { path = "./lib/patreon" }
 
 # os-specific dependencies
 [target.'cfg(target_os = "linux")'.dependencies]
-sdnotify = { version = "0.1", default-features = false }
+sdnotify = { version = "0.2", default-features = false }
 
 [build-dependencies]
 ructe = { version = "0.13", features = ["warp02"] }
