@@ -1,6 +1,6 @@
 [package]
 name = "techpriestsite"
-version = "3.0.3"
+version = "3.0.4"
 authors = ["Lucy Stingray <mementomori at head dot pet>", "Christine Dodrill <me@christine.website>"]
 edition = "2018"
 build = "src/build.rs"
