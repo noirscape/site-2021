@@ -1,3 +1,4 @@
+rm -rf deploy
 mkdir deploy
 cp -r "target/debug/techpriestsite" "deploy/techpriestsite"
 cp -r "config.dhall" "deploy/config.dhall"
