@@ -53,12 +53,20 @@
   </script>
 }
 
+@if post.front_matter.article_title.is_some() {
+    <h1>@post.front_matter.article_title.as_ref().unwrap()</h1>
+} else {
+    <h1>@post.front_matter.title</h1>
+}
+<p>@post.reading_time</p>
+
 @body
 
 <hr />
 
 <!-- The button that should be clicked. -->
 <button onclick="share_on_mastodon()">Share on Mastodon</button>
+<button onclick="share_on_pleroma()">Share on Pleroma</button>
 
 <p>This article was posted on @post.detri(). Facts and circumstances may have changed since publication. Please <a href="/contact">contact me</a> before jumping to conclusions if something seems wrong or unclear.</p>
 
@@ -124,6 +132,60 @@
             window.open(mastodon_url, '_blank');
             @}
         @}
+
+    // similar button to the other one.
+    function share_on_pleroma() @{
+        // Prefill the form with the user's previously-specified Pleroma instance, if applicable
+        var default_url = localStorage['pleroma_instance']; 
+
+        // If there is no cached instance/domain, then insert a "https://" with no domain at the start of the prompt. 
+        if (!default_url)
+            default_url = "https://"; 
+
+        var instance = prompt("Enter your instance's address: (ex: https://raxx.la)", default_url);
+        if (instance) @{ 
+            // Handle URL formats
+            if ( !instance.startsWith("https://") && !instance.startsWith("http://") )
+                instance = "https://" + instance;  
+
+            // get the current page's url
+            var url   = window.location.href;
+
+            // get the page title from the og:title meta tag, if it exists.
+            var title = document.querySelectorAll('meta[property="og:title"]')[0].getAttribute("content"); 
+
+            // Otherwise, use the <title> tag as the title
+            if (!title)    var title = document.getElementsByTagName("title")[0].innerHTML;
+
+            // Handle slash
+            if ( !instance.endsWith("/") )
+                instance = instance + "/"; 
+
+            // Cache the instance/domain for future requests
+            localStorage['pleroma_instance'] = instance; 
+
+            // Hashtags 
+            var hashtags = "#blogpost";
+
+            @if post.front_matter.series.is_some() {
+                hashtags += "#@post.front_matter.series.as_ref().unwrap()";
+            }
+
+            @if post.front_matter.tags.is_some() {
+                hashtags += "@for tag in post.front_matter.tags.as_ref().unwrap() { #@tag  }";
+            }
+
+            // Tagging users, such as offical accounts or the author of the post 
+            var author   = "@@techpriest@@raxx.la"; 
+
+            // Create the Share URL
+            // https://someinstance.tld/main/friends?message=URL%20encoded%20text
+            pleroma_url = instance + "main/friends?message=" + encodeURIComponent(title + "\n\n" + url + "\n\n" + hashtags + " " + author);
+
+            // Open a new window at the share location   
+            window.open(pleroma_url, '_blank');
+            @}
+    @}
 </script>
 
 <script src="/static/js/prism.js"></script>

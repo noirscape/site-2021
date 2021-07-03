@@ -2,6 +2,12 @@
 
 New site features will be documented here.
 
+## 3.0.2
+
+- Added estimated reading time calculation.
+- Added share on pleroma button.
+- Added article_title/moved displaying the title out of main blog body logic
+
 ## 2.1.0
 
 - Blogpost bodies are now present in the RSS feed

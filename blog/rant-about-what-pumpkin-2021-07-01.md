@@ -8,8 +8,6 @@ tags:
  - hussie
 ---
 
-# Rant about legal threats and gaslighting behavior from What Pumpkin and Andrew Hussie
-
 Hey all, Tech here.
 
 What follows is a pretty much unedited discord rant (I only spaced some stuff out for formatting and cleaned up a small bit in the intro) I made upon watching [this recent video](https://www.youtube.com/watch?v=gsM9bQvpt_c) by Sarah Z about the legal threats she received from What Pumpkin, the company involved with Homestuck, and the subsequent email exchange between her and Andrew Hussie about the game development of Hiveswap. Consider it a set of comments about that specific situation.

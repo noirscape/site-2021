@@ -12,6 +12,7 @@ pub struct Data {
     pub thumb: Option<String>,
     // pub show: Option<bool>,
     pub redirect_to: Option<String>,
+    pub article_title: Option<String>,
 }
 
 enum State {

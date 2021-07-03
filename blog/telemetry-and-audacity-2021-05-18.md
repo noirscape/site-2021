@@ -3,8 +3,6 @@ title: Telemetry in FOSS & Audacity
 date: 2021-05-18
 ---
 
-# Telemetry in FOSS & Audacity
-
 Over the years, the attitude towards FOSS seems to have made... a turn.  Whereas originally, FOSS was the realm of the lunatic, the weirdo and that guy who kinda smelled like old funky cheese, nowadays many people end up using Free Software. As we see this grow, at times we see friction pop up between those who were there in the past and those who are in the community now, like for instance when RMS got ousted from the FSF (although he later slinked his way back in) for holding abhorrent views on non-programming related matters.
 
 On an audience end, more and more people have started to use FOSS. I remember as a kid when the teacher in high school suddenly stopped using windows media player, the app I was thought to use as a kid to watch movies, listen to music and the like, and used this weird program called VLC. It was weird, it had this red road pylon on it, but eventually I got curious and since the high school I was on made the same programs available to students as they did for teachers, I quickly learned that VLC was in fact, just a movie player. I didn't learn it was FOSS until two years later.
@@ -80,3 +78,6 @@ Finally, on where to go with this; honestly for the FOSS crowd, I'd consider rea
 
 Get your shit together. Maybe then you can actually be a serious competitor instead of one that is only serious because FOSS is a good corporate marketing blurb.
 
+## Amendment in July 2021
+
+Well, this article aged poorly. Seems Musescore is [now trying to go open core](https://musescore.org/en/node/319957). For brevity's sake, I'll leave this article as is, but I obviously no longer have the positive reception I had initially to musescore's takeover attempt.

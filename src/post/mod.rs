@@ -12,6 +12,7 @@ pub struct Post {
     pub link: String,
     pub body_html: String,
     pub date: DateTime<FixedOffset>,
+    pub reading_time: String,
 }
 
 impl Into<jsonfeed::Item> for Post {
@@ -69,6 +70,17 @@ impl Post {
     }
 }
 
+trait ConvertDisplaySeconds {
+    fn convert_seconds(&self) -> String;
+}
+
+impl ConvertDisplaySeconds for u64 {
+    fn convert_seconds(&self) -> String {
+        let minutes: u64 = self / 60;
+        return String::from(format!("{} minutes", minutes));
+    }
+} 
+
 async fn read_post(dir: &str, fname: PathBuf) -> Result<Post> {
     let body = fs::read_to_string(fname.clone())
         .await
@@ -85,12 +97,14 @@ async fn read_post(dir: &str, fname: PathBuf) -> Result<Post> {
         DateTime::<Utc>::from_utc(NaiveDateTime::new(date, NaiveTime::from_hms(0, 0, 0)), Utc)
             .with_timezone(&Utc)
             .into();
+    let reading_time: String = estimated_read_time::text(body, &estimated_read_time::Options::new().wpm(225)).seconds().convert_seconds();
 
     Ok(Post {
         front_matter,
         link,
         body_html,
         date,
+        reading_time,
     })
 }
 

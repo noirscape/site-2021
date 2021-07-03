@@ -1,9 +1,8 @@
 ---
 title: New website!
 date: 2021-05-15
+article_title: New website
 ---
-
-# New website
 
 Sup humans! It's ya girl. Here up in your bits with a totally new site. Okay well, not entirely new. Okay kinda new but the backend isn't. Fuck this is gonna need an explanation huh.
 
