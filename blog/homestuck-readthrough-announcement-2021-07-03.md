@@ -1,5 +1,5 @@
 ---
-title: "Announcement Reading through Homestuck in 2021 (and beyond)"
+title: "Announcement Reading through Homestuck in 2021 (and beyond) [abandoned]"
 date: 2021-07-03
 series: homestuck-readthrough
 tags:
@@ -67,3 +67,7 @@ This also of course means I will be making a deliberate effort to not give Andre
 And... with that, I have nothing else to really say. Expect an Act update soon-ish I guess, the first few acts of Homestuck are kinda short. It'll be at my own pace though so I might also write about other things. I'll make sure this is all collected under a blog series so you can easily read through these things later.
 
 See ya on the flipside!
+
+## UPDATE AUGUST 2021
+
+Yeah this didn't last long. It's abandoned. Leaving the post up but this one is called off for now.
